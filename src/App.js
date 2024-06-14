@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import Marketplace from './components/Marketplace';
+import SearchFilter from './components/SearchFilter';
+import Topbar from './components/Topbar';
+
+import Navbar from './components/Topbar'
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <div className='container'>
+        {/* <Navbar /> */}
+
+        <Topbar/>
+
+        <Marketplace />
+
+        <div className='dummy'></div>
+
+        <div className='searchfilter bg-success mx-auto'>
+          <SearchFilter />
+        </div>
+
+      </div>
+
     </div>
   );
 }

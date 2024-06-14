@@ -1,0 +1,80 @@
+@media (max-width: 576px) {
+    .sm-mx-0 {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .loginbtn {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .navlinks {
+        font-size: 12px;
+    }
+
+    .loginbtn {
+        font-size: 12px;
+    }
+}
+
+.topbardiv{
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+.evoque {
+    font-family: "Poppins", sans-serif;
+}
+
+.navlinks {
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #666777 !important;
+    position: relative;
+}
+
+.navlinks:hover,
+.navlinks:active {
+    color: rgba(4, 97, 209, 1) !important;
+}
+
+.navlinks.selected {
+    color: rgba(4, 97, 209, 1) !important;
+}
+
+@media(min-width: 991px) {
+
+    .navlinks::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background-color: rgba(4, 97, 209, 1) !important;
+        visibility: hidden;
+        transition: 0.2s ease-in-out;
+    }
+
+    .navlinks:hover::before,
+    .navlinks:active::before,
+    .navlinks.selected::before {
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        visibility: visible;
+    }
+}
+
+.loginbtn{
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+

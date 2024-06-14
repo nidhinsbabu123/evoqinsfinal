@@ -1,0 +1,259 @@
+/* ---------------------------------CARD ONE---------CARD ONE----------------CARD ONE----------------- */
+.cardOne {
+    width: 350px;
+    height: 387px;
+    top: 496px;
+    left: 545px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    border-radius: 8px;
+    box-shadow: 0px 16px 32px 0px rgba(221, 230, 237, 0.54);
+}
+
+.cardOneImg {
+    position: absolute;
+    /* top: 512px; */
+    top: 494px;
+    /* I need to do -18 to appear it better */
+    /* left: 561px; */
+    left: 559px;
+
+    /* width: 318px;
+    height: 124px;
+    top: 512px;
+    left: 561px;
+    gap: 0px;
+    opacity: 0px; */
+}
+
+.cardOneImageShadow {
+    position: absolute;
+    width: 350px;
+    height: 156px;
+    top: 478px;
+    /* I need to do -18 to appear it better */
+    left: 540px;
+    gap: 0px;
+    border-radius: 8px 8px 0px 0px;
+    opacity: 0px;
+}
+
+.cardOneBackground {
+    position: absolute;
+    width: 350px;
+    height: 156px;
+    top: 478px;
+    /* I need to do -18 to appear it better */
+    left: 540px;
+    gap: 0px;
+    border-radius: 8px 8px 0px 0px;
+    opacity: 0px;
+
+}
+
+.cardOneGreenRect {
+    position: absolute;
+    width: 49px;
+    height: 52px;
+    top: 486px;
+    /* I need to do -18 to appear it better */
+    left: 554px;
+    gap: 0px;
+    opacity: 0.8px;
+}
+
+.cardOnepolygon {
+    position: absolute;
+    width: 20px;
+    height: 21px;
+    top: 487px;
+    /* I need to do -18 to appear it better */
+    left: 557px;
+    gap: 0px;
+    opacity: 0px;
+
+}
+
+.cardOneTextHead {
+    position: absolute;
+    /* width: 188px; */
+    /* height: 18px; */
+    color: rgba(68, 68, 68, 1);
+    top: 658px;
+    /* I need to do -18 to appear it better */
+    left: 560px;
+    gap: 0px;
+    opacity: 0px;
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 18.24px;
+    text-align: center;
+}
+
+.cardOneDescription {
+    position: absolute;
+    width: 318px;
+    height: 40px;
+    color: rgba(68, 68, 68, 1);
+    top: 684px;
+    /* I need to do -18 to appear it better */
+    left: 561px;
+    gap: 0px;
+    opacity: 0px;
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+}
+
+.price {
+    position: absolute;
+    width: 183px;
+    height: 18px;
+    /* top: 766px; */
+    /* I need to do -18 to appear it better */
+    top: 748px;
+    left: 561px;
+    gap: 0px;
+    opacity: 0px;
+}
+
+.price p {
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 18.24px;
+    text-align: left;
+    color: rgba(68, 68, 68, 1);
+}
+
+.price span {
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 15.64px;
+    text-align: left;
+    color: rgba(68, 68, 68, 1);
+}
+
+.offerPrice {
+    position: absolute;
+    width: 200px;
+    height: 21px;
+    /* top: 792px;*/
+    top: 774px;
+    left: 561px;
+    gap: 0px;
+    opacity: 0px;
+}
+
+.offerPrice p {
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    text-align: left;
+    color: rgba(68, 68, 68, 1);
+}
+
+.offerPrice .spanOne {
+
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    text-align: left;
+    color: rgba(19, 215, 38, 1);
+}
+
+.offerPrice .spanTwo {
+
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    text-align: left;
+    color: rgba(68, 68, 68, 1);
+}
+
+.viewBtn {
+    position: absolute;
+    width: 151px;
+    height: 33px;
+    /* top: 834px;*/
+    /* I need to do -18 to appear it better */
+    top: 816px;
+    left: 561px;
+    padding: 8px 23px 8px 22px;
+    gap: 10px;
+    border-radius: 4px;
+    opacity: 0px;
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16.94px;
+
+}
+
+.openBtn {
+    position: absolute;
+    width: 151px;
+    height: 33px;
+    /* top: 834px; */
+    /* I need to do -18 to appear it better */
+    top: 816px;
+    left: 728px;
+    padding: 8px 26px 8px 25px;
+    gap: 10px;
+    border-radius: 4px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+
+    font-family: "Hanken Grotesk", sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 16.94px;
+
+}
+
+/* ---------------------CARD TWO----------------CARD TWO----------------CARD TWO-------------------- */
+
+.cardTwo {
+    position: absolute;
+    width: 350px;
+    height: 387px;
+    /* top: 496px; */
+    left: 540px;
+    gap: 0px;
+    border: 1px 0px 0px 0px;
+    opacity: 0px;
+    border-radius: 8px;
+    box-shadow: 0px 16px 32px 0px rgba(221, 230, 237, 0.54);
+}
+
+.cardTwoImageShadow {
+    position: absolute;
+    width: 350px;
+    height: 156px;
+    /* top: 914px; */
+    /* top: 830px; */
+    /* left: 545px; */
+    gap: 0px;
+    border-radius: 8px 8px 0px 0px;
+    opacity: 0px;
+
+}
+
+.cardTwoBackground {
+    position: absolute;
+    width: 350px;
+    height: 156px;
+    /* top: 914px; */
+    /* top: 830px; */
+    /* left: 545px; */
+    gap: 0px;
+    border-radius: 8px 8px 0px 0px;
+    opacity: 0px;
+
+}
