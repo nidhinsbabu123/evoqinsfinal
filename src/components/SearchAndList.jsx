@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import './searchAndList.css'
 import { IoSearchSharp } from "react-icons/io5"
 import { postingTheList } from '../services/AllApi';
