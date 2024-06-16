@@ -38,7 +38,7 @@ function Topbar() {
                                         >
                                             <Offcanvas.Header closeButton>
                                                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                                                    Offcanvas
+                                                Evoque Innovative Lab
                                                 </Offcanvas.Title>
                                             </Offcanvas.Header>
                                             <Offcanvas.Body>

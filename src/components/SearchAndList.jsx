@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './searchAndList.css'
 import { IoSearchSharp } from "react-icons/io5"
+import { postingTheList } from '../services/AllApi';
 
 function SearchAndList() {
     const [selectedOption, setSelectedOption] = useState('All');
-    const [selectedRate, setSelectedRate] = useState('Full')
-    const [selectedType, setSelectedType] = useState('Every')
+    const [selectedRate, setSelectedRate] = useState('5')
+    const [selectedType, setSelectedType] = useState('null')
 
     // For Developed By
     const handleRadioChange = (e) => {
@@ -27,12 +28,41 @@ function SearchAndList() {
 
     // For Application Type
     const handleRadioChangeType = (e) => {
-        setSelectedType(e.target.value);
+        const type = e.target.value;
+        setSelectedType(type);
+        postList(type)
+
     };
 
     const getTypeFontWeight = (option) => {
-        return selectedRate === option ? 500 : 400;
+        return selectedType === option ? 500 : 400;
     };
+
+    // ----------For Filter-------------Filter------------------Filter------------------Filter-----------Filter---------
+
+    const postList = async (type) => {
+
+        try{
+
+            const header = {
+                "content-type" : "application/json",
+                'Access-Token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYwODEwMDI4MCwiZXhwIjoxNjE1ODc2MjgwfQ.eyJ0eXBlIjozLCJpZCI6MTQ5MzMsImNyZWF0ZWQiOiIyMDIwLTEyLTE2IDA2OjMxOjIwLjczMTk2NiJ9.Ef001xBUX_ZPsgvGWCou9sUa6Q2BV9jvPWZZsnwE8qB3_IDTGaSNV0d0lmcuWab2FwEUQ3GouA9LVdd7ExmkvQ'
+            };
+
+            const data = await postingTheList(type,header);
+
+            if(!data){
+                throw new Error('No data returned from the API or I conducted a mistake while doing API Call')
+            }
+            console.log("The posted data is :", data );
+
+        }catch(error){
+            console.error("Error in the posting the list :", error)
+        }
+        
+
+    }
+   
 
 
     return (
@@ -177,8 +207,8 @@ function SearchAndList() {
                                 type="radio"
                                 name="firstname"
                                 id="firstnameone"
-                                value="Full"
-                                checked={selectedRate === 'Full'}
+                                value='5'
+                                checked={selectedRate === '5'}
                                 onChange={handleRadioChangeRate}
                             />
 
@@ -186,7 +216,7 @@ function SearchAndList() {
                             <label
                                 className="above"
                                 htmlFor="firstnameone"
-                                style={{ fontWeight: getRateFontWeight('Full') }}
+                                style={{ fontWeight: getRateFontWeight('5') }}
                             >
                                 All
                             </label>
@@ -201,8 +231,8 @@ function SearchAndList() {
                                 type="radio"
                                 name="flexRadioDefaulttwo"
                                 id="flexRadioDefault2two"
-                                value="fourStar"
-                                checked={selectedRate === 'fourStar'}
+                                value="4"
+                                checked={selectedRate === '4'}
                                 onChange={handleRadioChangeRate}
                             />
 
@@ -210,7 +240,7 @@ function SearchAndList() {
                             <label
                                 className="above"
                                 htmlFor="flexRadioDefault2two"
-                                style={{ fontWeight: getRateFontWeight('fourStar') }}
+                                style={{ fontWeight: getRateFontWeight('4') }}
                             >
                                 
                                 <img src="./images/fourstar.svg" alt="" /> & above
@@ -227,15 +257,15 @@ function SearchAndList() {
                                 type="radio"
                                 name="flexRadioDefaulttwo"
                                 id="flexRadioDefault3two"
-                                value="threeStar"
-                                checked={selectedRate === 'threeStar'}
+                                value="3"
+                                checked={selectedRate === '3'}
                                 onChange={handleRadioChangeRate}
                             />
                             {/* form-check-label */}
                             <label
                                 className="above"
                                 htmlFor="flexRadioDefault3two"
-                                style={{ fontWeight: getRateFontWeight('threeStar') }}
+                                style={{ fontWeight: getRateFontWeight('3') }}
                             >
                                 <img src="./images/threestar.svg" alt="" /> & above
                             </label>
@@ -250,15 +280,15 @@ function SearchAndList() {
                                 type="radio"
                                 name="flexRadioDefaulttwo"
                                 id="flexRadioDefault4two"
-                                value="twoStar"
-                                checked={selectedRate === 'twoStar'}
+                                value="2"
+                                checked={selectedRate === '2'}
                                 onChange={handleRadioChangeRate}
                             />
                             {/* form-check-label */}
                             <label
                                 className="above"
                                 htmlFor="flexRadioDefault4two"
-                                style={{ fontWeight: getRateFontWeight('twoStar') }}
+                                style={{ fontWeight: getRateFontWeight('2') }}
                             >
                                 <img src="./images/twoStar.svg" alt="" /> & above
                             </label>
@@ -273,15 +303,15 @@ function SearchAndList() {
                                 type="radio"
                                 name="flexRadioDefaulttwo"
                                 id="flexRadioDefault5two"
-                                value="oneStar"
-                                checked={selectedRate === 'oneStar'}
+                                value="1"
+                                checked={selectedRate === '1'}
                                 onChange={handleRadioChangeRate}
                             />
                             {/* form-check-label */}
                             <label
                                 className="above"
                                 htmlFor="flexRadioDefault5two"
-                                style={{ fontWeight: getRateFontWeight('oneStar') }}
+                                style={{ fontWeight: getRateFontWeight('1') }}
                             >
                                 <img src="./images/oneStar.svg" alt="" /> & above
                             </label>
@@ -305,16 +335,16 @@ function SearchAndList() {
                                 type="radio"
                                 name="type"
                                 id="everyone"
-                                value="Every"
-                                checked={selectedType === 'Every'}
-                                onChange={handleRadioChangeType}
+                                value='null'
+                                checked={selectedType === 'null'}
+                                onChange={(e) => {handleRadioChangeType(e)}}
                             />
 
                             {/* form-check-label */}
                             <label
                                 className="above"
                                 htmlFor="everyone"
-                                style={{ fontWeight: getTypeFontWeight('Every') }}
+                                style={{ fontWeight: getTypeFontWeight('null') }}
                             >
                                 All
                             </label>
@@ -329,16 +359,17 @@ function SearchAndList() {
                                 type="radio"
                                 name="type"
                                 id="webBased"
-                                value="Web"
-                                checked={selectedType === 'Web'}
-                                onChange={handleRadioChangeType}
+                                value="1"
+                                checked={selectedType === '1'}
+                                onChange={(e) => {handleRadioChangeType(e)}}
+                                // onChange={handleRadioChangeType}
                             />
 
                             {/* form-check-label */}
                             <label
                                 className="above"
                                 htmlFor="webBased"
-                                style={{ fontWeight: getTypeFontWeight('Web') }}
+                                style={{ fontWeight: getTypeFontWeight('1') }}
                             >
                                 
                                 Web based applications
@@ -355,15 +386,16 @@ function SearchAndList() {
                                 type="radio"
                                 name="type"
                                 id="mobile"
-                                value="Mobile"
-                                checked={selectedType === 'Mobile'}
-                                onChange={handleRadioChangeType}
+                                value="2"
+                                checked={selectedType === '2'}
+                                onChange={(e) => {handleRadioChangeType(e)}}
+                                // onChange={handleRadioChangeType}
                             />
                             {/* form-check-label */}
                             <label
                                 className="above"
                                 htmlFor="mobile"
-                                style={{ fontWeight: getTypeFontWeight('Mobile') }}
+                                style={{ fontWeight: getTypeFontWeight('2') }}
                             >
                                 Mobile applications
                             </label>
@@ -399,66 +431,3 @@ export default SearchAndList
 
 
 
-// import React from 'react'
-// import './searchAndList.css'
-// import { IoSearchSharp } from "react-icons/io5";
-
-
-// function SearchAndList() {
-//     return (
-//         <>
-
-//             <div className='main'>
-//                 <div class="input-group rounded-1 w-75">
-//                     <div class="input-group-text"><IoSearchSharp /></div>
-//                     <input type="text" class="form-control" id="specificSizeInputGroupUsername" placeholder="Search for products" />
-//                 </div>
-
-//                 <div className='developedlist mt-5'>
-
-//                     <span>Developed by</span>
-
-//                     <div className='listItems'>
-
-//                         <div class="form-check mt-3">
-//                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1"/>
-//                                 <label class="form-check-label" for="flexRadioDefault1">
-//                                     All
-//                                 </label>
-//                         </div>
-//                         <div class="form-check my-3">
-//                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
-//                                 <label class="form-check-label" for="flexRadioDefault2">
-//                                 Evoque Innovative Lab
-//                                 </label>
-//                         </div>
-//                         <div class="form-check">
-//                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
-//                                 <label class="form-check-label" for="flexRadioDefault2">
-//                                 Lorem Ipsum
-//                                 </label>
-//                         </div>
-//                         <div class="form-check my-3">
-//                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
-//                                 <label class="form-check-label" for="flexRadioDefault2">
-//                                 Lorem Ipsum
-//                                 </label>
-//                         </div>
-//                         <div class="form-check">
-//                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2"/>
-//                                 <label class="form-check-label" for="flexRadioDefault2">
-//                                 Lorem Ipsum
-//                                 </label>
-//                         </div>
-
-//                     </div>
-
-//                 </div>
-
-//             </div>
-
-//         </>
-//     )
-// }
-
-// export default SearchAndList

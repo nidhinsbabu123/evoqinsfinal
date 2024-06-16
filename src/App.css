@@ -8,10 +8,6 @@ body{
   font-family: "Poppins", sans-serif;
 }
 
-.dummy{
-  content: "";
-  height: 324px;
-}
 
 .searchfilter{
   max-width: 1110px;

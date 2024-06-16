@@ -1,9 +1,9 @@
 import './App.css';
+import Footer from './components/Footer';
 import Marketplace from './components/Marketplace';
 import SearchFilter from './components/SearchFilter';
 import Topbar from './components/Topbar';
 
-import Navbar from './components/Topbar'
 
 
 function App() {
@@ -17,15 +17,21 @@ function App() {
 
         <Marketplace />
 
-        <div className='dummy'></div>
 
-        <div className='searchfilter bg-success mx-auto'>
+        <div className='searchfilter bg-succes mx-auto px-3 mt-5'>
           <SearchFilter />
         </div>
 
       </div>
 
+      <Footer/>
+
+      
+
     </div>
+
+
+
   );
 }
 

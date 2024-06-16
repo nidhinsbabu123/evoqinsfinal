@@ -1,0 +1,52 @@
+.footerBackgroundwall{
+    position: relative;
+    background-color: rgba(4, 97, 209, 1);
+    height: 408px;
+}
+
+.footerImg1{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.footerWelcome{
+    font-weight: 400;
+    gap: 5px;
+    font-family: "Poppins", sans-serif;
+    font-size: 34px;
+    line-height: 56px;
+    z-index: 5;
+}
+
+.footerWelcome span{
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.footerSubtitle{
+    width: 431px;
+    width: 100%;
+    line-height: 24px;
+    z-index: 5;
+}
+
+.footerSubtitle p.footerTagline{
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: rgba(255, 255, 255, 1);
+}
+
+
+
+.footerOpenBtn{
+    position: absolute;
+    z-index: 20;
+    top: 75%;
+    color: rgba(4, 97, 209, 1);
+    font-size: 14px;
+    font-weight: 700;
+    font-family: "Hanken Grotesk", sans-serif;
+}
