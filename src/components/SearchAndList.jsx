@@ -1,12 +1,45 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './searchAndList.css'
 import { IoSearchSharp } from "react-icons/io5"
-import { postingTheList } from '../services/AllApi';
+import { getList, postingTheList} from '../services/AllApi';
+import { sortContext } from './ContextShare';
+
 
 function SearchAndList() {
     const [selectedOption, setSelectedOption] = useState('All');
     const [selectedRate, setSelectedRate] = useState('5')
     const [selectedType, setSelectedType] = useState('null')
+    const [errors, setErrors] = useState(null)
+    const [inputDetails, setInputDetails] = useState({ rating_by: 5, application_type: null })
+    const [listData, setListData] = useState([])
+
+    const {sortValue, setSortValue} = useContext(sortContext)
+
+    const sortStatus = parseInt(sortValue)
+
+
+    const getFilter = async () => {
+        const response = await getList()
+        setListData(response)
+    }
+
+    console.log("List data is : ", listData);
+
+    useEffect(() => {
+        getFilter();
+    },[])
+
+
+    useEffect(() => {
+        postList(inputDetails, sortStatus)
+    }, [inputDetails, sortStatus])
+
+    const handleDetails = (e) => {
+        setInputDetails(prevDetails => ({
+            ...prevDetails, [e.target.name]: parseInt(e.target.value) 
+        }))
+    }
+
 
     // For Developed By
     const handleRadioChange = (e) => {
@@ -19,7 +52,9 @@ function SearchAndList() {
 
     // For Rating
     const handleRadioChangeRate = (e) => {
-        setSelectedRate(e.target.value);
+        const value = e.target.value
+        setSelectedRate(value);
+        handleDetails(e);
     };
 
     const getRateFontWeight = (option) => {
@@ -28,41 +63,66 @@ function SearchAndList() {
 
     // For Application Type
     const handleRadioChangeType = (e) => {
-        const type = e.target.value;
-        setSelectedType(type);
-        postList(type)
-
+        const value = e.target.value
+        setSelectedType(value);
+        handleDetails(e);
     };
 
     const getTypeFontWeight = (option) => {
         return selectedType === option ? 500 : 400;
     };
 
+    // console.log("The Details is :", inputDetails);
+
+
+
     // ----------For Filter-------------Filter------------------Filter------------------Filter-----------Filter---------
 
-    const postList = async (type) => {
+    const postList = async (details, sortStatus) => {
 
-        try{
+        try {
 
             const header = {
-                "content-type" : "application/json",
+                "content-type": "application/json",
                 'Access-Token': 'eyJhbGciOiJIUzUxMiIsImlhdCI6MTYwODEwMDI4MCwiZXhwIjoxNjE1ODc2MjgwfQ.eyJ0eXBlIjozLCJpZCI6MTQ5MzMsImNyZWF0ZWQiOiIyMDIwLTEyLTE2IDA2OjMxOjIwLjczMTk2NiJ9.Ef001xBUX_ZPsgvGWCou9sUa6Q2BV9jvPWZZsnwE8qB3_IDTGaSNV0d0lmcuWab2FwEUQ3GouA9LVdd7ExmkvQ'
             };
 
-            const data = await postingTheList(type,header);
-
-            if(!data){
-                throw new Error('No data returned from the API or I conducted a mistake while doing API Call')
+            const fullDetails = {
+                "page_num": 1,
+                "filter_id": null,
+                "segment_id": null,
+                "price_type": null,
+                "rating_by": details.rating_by,
+                "application_type": details.application_type,
+                "min_price_limit": 0,
+                "max_price_limit": 29500000,
+                "min_investment_limit": 0,
+                "max_investment_limit": 100000000,
+                "sort_by": sortStatus
             }
-            console.log("The posted data is :", data );
 
-        }catch(error){
+
+            const data = await postingTheList(fullDetails, header);
+
+
+            if (data.status === 200){
+            
+                getFilter()
+                
+
+            }
+
+            if (data.error) {
+                throw new Error(data.message)
+            }
+            console.log("The posted data is :", data);
+
+        } catch (error) {
             console.error("Error in the posting the list :", error)
+            setErrors(error.message)
         }
-        
 
     }
-   
 
 
     return (
@@ -73,14 +133,15 @@ function SearchAndList() {
                     <input type="text" className="form-control" id="specificSizeInputGroupUsername" placeholder="Search for products" />
                 </div>
 
+                {errors && <div className="error">Error: {errors}</div>}
+
                 <div className='listhead mt-5'>
                     <span>Developed by</span>
 
                     <div className='listItems'>
 
-                        {/* form-check */}
                         <div className="d-flex items-center justify-center gap-1 mt-3">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
@@ -91,7 +152,7 @@ function SearchAndList() {
                                 onChange={handleRadioChange}
                             />
 
-                            {/* form-check-label */}
+
                             <label
                                 className="above"
                                 htmlFor="flexRadioDefault1"
@@ -101,9 +162,9 @@ function SearchAndList() {
                             </label>
                         </div>
 
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1 my-3">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
@@ -114,7 +175,7 @@ function SearchAndList() {
                                 onChange={handleRadioChange}
                             />
 
-                            {/* form-check-label */}
+
                             <label
                                 className=""
                                 htmlFor="flexRadioDefault2"
@@ -124,9 +185,9 @@ function SearchAndList() {
                             </label>
                         </div>
 
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
@@ -136,7 +197,7 @@ function SearchAndList() {
                                 checked={selectedOption === 'Lorem Ipsum 1'}
                                 onChange={handleRadioChange}
                             />
-                            {/* form-check-label */}
+
                             <label
                                 className=""
                                 htmlFor="flexRadioDefault3"
@@ -146,9 +207,9 @@ function SearchAndList() {
                             </label>
                         </div>
 
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1 my-3">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
@@ -158,7 +219,7 @@ function SearchAndList() {
                                 checked={selectedOption === 'Lorem Ipsum 2'}
                                 onChange={handleRadioChange}
                             />
-                            {/* form-check-label */}
+
                             <label
                                 className=""
                                 htmlFor="flexRadioDefault4"
@@ -168,9 +229,9 @@ function SearchAndList() {
                             </label>
                         </div>
 
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
@@ -180,7 +241,7 @@ function SearchAndList() {
                                 checked={selectedOption === 'Lorem Ipsum 3'}
                                 onChange={handleRadioChange}
                             />
-                            {/* form-check-label */}
+
                             <label
                                 className=""
                                 htmlFor="flexRadioDefault5"
@@ -199,20 +260,19 @@ function SearchAndList() {
 
                     <div className='listItems'>
 
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1 mt-3">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
-                                name="firstname"
+                                name="rating_by"
                                 id="firstnameone"
                                 value='5'
                                 checked={selectedRate === '5'}
                                 onChange={handleRadioChangeRate}
                             />
 
-                            {/* form-check-label */}
                             <label
                                 className="above"
                                 htmlFor="firstnameone"
@@ -222,46 +282,43 @@ function SearchAndList() {
                             </label>
                         </div>
 
-                        {/* Four Star */}
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1 my-3">
-                            {/* form-check-input */}
                             <input
                                 className=""
                                 type="radio"
-                                name="flexRadioDefaulttwo"
+                                name="rating_by"
                                 id="flexRadioDefault2two"
                                 value="4"
                                 checked={selectedRate === '4'}
                                 onChange={handleRadioChangeRate}
                             />
 
-                            {/* form-check-label */}
+
                             <label
                                 className="above"
                                 htmlFor="flexRadioDefault2two"
                                 style={{ fontWeight: getRateFontWeight('4') }}
                             >
-                                
+
                                 <img src="./images/fourstar.svg" alt="" /> & above
 
                             </label>
                         </div>
 
-                        {/* Three Star */}
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
-                                name="flexRadioDefaulttwo"
+                                name="rating_by"
                                 id="flexRadioDefault3two"
                                 value="3"
                                 checked={selectedRate === '3'}
                                 onChange={handleRadioChangeRate}
                             />
-                            {/* form-check-label */}
+
                             <label
                                 className="above"
                                 htmlFor="flexRadioDefault3two"
@@ -271,20 +328,19 @@ function SearchAndList() {
                             </label>
                         </div>
 
-                        {/* Two Star */}
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1 my-3">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
-                                name="flexRadioDefaulttwo"
+                                name="rating_by"
                                 id="flexRadioDefault4two"
                                 value="2"
                                 checked={selectedRate === '2'}
                                 onChange={handleRadioChangeRate}
                             />
-                            {/* form-check-label */}
+
                             <label
                                 className="above"
                                 htmlFor="flexRadioDefault4two"
@@ -294,20 +350,19 @@ function SearchAndList() {
                             </label>
                         </div>
 
-                        {/* One Star */}
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
-                                name="flexRadioDefaulttwo"
+                                name="rating_by"
                                 id="flexRadioDefault5two"
                                 value="1"
                                 checked={selectedRate === '1'}
                                 onChange={handleRadioChangeRate}
                             />
-                            {/* form-check-label */}
+
                             <label
                                 className="above"
                                 htmlFor="flexRadioDefault5two"
@@ -327,20 +382,20 @@ function SearchAndList() {
 
                     <div className='listItems'>
 
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1 mt-3">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
-                                name="type"
+                                name="application_type"
                                 id="everyone"
-                                value='null'
+                                value="null"
                                 checked={selectedType === 'null'}
-                                onChange={(e) => {handleRadioChangeType(e)}}
+                                onChange={(e) => { handleRadioChangeType(e) }}
                             />
 
-                            {/* form-check-label */}
+
                             <label
                                 className="above"
                                 htmlFor="everyone"
@@ -350,48 +405,44 @@ function SearchAndList() {
                             </label>
                         </div>
 
-                        {/* Web Based */}
-                        {/* form-check */}
+
                         <div className="d-flex items-center justify-center gap-1 my-3">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
-                                name="type"
+                                name="application_type"
                                 id="webBased"
                                 value="1"
                                 checked={selectedType === '1'}
-                                onChange={(e) => {handleRadioChangeType(e)}}
-                                // onChange={handleRadioChangeType}
+                                onChange={(e) => { handleRadioChangeType(e) }}
+
                             />
 
-                            {/* form-check-label */}
+
                             <label
                                 className="above"
                                 htmlFor="webBased"
                                 style={{ fontWeight: getTypeFontWeight('1') }}
                             >
-                                
+
                                 Web based applications
 
                             </label>
                         </div>
 
-                        {/* Mobile Applications */}
-                        {/* form-check */}
                         <div className="d-flex items-center justify-center gap-1">
-                            {/* form-check-input */}
+
                             <input
                                 className=""
                                 type="radio"
-                                name="type"
+                                name="application_type"
                                 id="mobile"
                                 value="2"
                                 checked={selectedType === '2'}
-                                onChange={(e) => {handleRadioChangeType(e)}}
-                                // onChange={handleRadioChangeType}
+                                onChange={(e) => { handleRadioChangeType(e) }}
                             />
-                            {/* form-check-label */}
+
                             <label
                                 className="above"
                                 htmlFor="mobile"
@@ -401,9 +452,6 @@ function SearchAndList() {
                             </label>
                         </div>
 
-                        
-
-                        
                     </div>
 
                 </div>
@@ -414,20 +462,4 @@ function SearchAndList() {
 }
 
 export default SearchAndList
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

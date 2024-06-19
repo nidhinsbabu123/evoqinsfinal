@@ -1,23 +1,28 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import './filterAndCards.css'
 import { Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
-import { getList } from '../services/AllApi';
+import { sortContext } from './ContextShare';
 
 
 
 function FilterAndCards() {
 
-    useEffect(() => {
-        getFilter();
-    },[])
+    const [sortList, setSortList] = useState('1')
 
-    const getFilter = async () => {
-        const response = await getList()
-        console.log(" Response is : ", response);
+    const {sortValue, setSortValue} = useContext(sortContext)
+
+
+    const handleFilter = (e) =>{
+        setSortList(e.target.value)
     }
+
+    setSortValue(sortList)
+
+    console.log("Sort List is : ", sortList);
+    console.log("setSortValue Context = ", sortValue);
 
     return (
         <>
@@ -31,7 +36,8 @@ function FilterAndCards() {
                     <div className='text-end'>
 
                         <Form.Group className='w-50 ms-auto' as={Col} controlId="formGridState">
-                            <Form.Select defaultValue="" onChange={() => getFilter()} >
+                            <Form.Select defaultValue="Choose..." onChange={(e) => {handleFilter(e)}}>
+                                <option value="">Choose...</option>
                                 <option value={1}>Newly added</option>
                                 <option value={2}>Top Rated</option>
                                 <option value={3}>Top performing</option>

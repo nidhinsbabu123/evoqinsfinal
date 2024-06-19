@@ -10,3 +10,4 @@ export const getList = async()=>{
 export const postingTheList = async(body,header)=>{
     return await commonApi("POST",`${BASE_URL}`,body,header)
 }
+
