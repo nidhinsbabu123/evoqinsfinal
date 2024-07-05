@@ -18,7 +18,7 @@ function App() {
         <Marketplace />
 
 
-        <div className='searchfilter bg-succes mx-auto px-3 mt-5'>
+        <div className='searchfilter bg-succes mx-auto mt-5'>
           <SearchFilter />
         </div>
 

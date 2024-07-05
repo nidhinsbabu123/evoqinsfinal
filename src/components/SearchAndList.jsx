@@ -1,44 +1,38 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import './searchAndList.css'
 import { IoSearchSharp } from "react-icons/io5"
-import { getList, postingTheList} from '../services/AllApi';
-import { sortContext } from './ContextShare';
+import { searchTheList} from '../services/AllApi';
+import { searchContext, searchTextContext, sortContext } from './ContextShare';
 
 
 function SearchAndList() {
     const [selectedOption, setSelectedOption] = useState('All');
     const [selectedRate, setSelectedRate] = useState('5')
     const [selectedType, setSelectedType] = useState('null')
-    const [errors, setErrors] = useState(null)
     const [inputDetails, setInputDetails] = useState({ rating_by: 5, application_type: null })
-    const [listData, setListData] = useState([])
 
     const {sortValue, setSortValue} = useContext(sortContext)
+    const { searchValue, setSearchValue } = useContext(searchContext);
+    const { searchTextBox, setSearchTextBox } = useContext(searchTextContext)
 
-    const sortStatus = parseInt(sortValue)
+    const [search, setSearch] = useState("")
 
+    const [errors, setErrors] = useState(null)
 
-    const getFilter = async () => {
-        const response = await getList()
-        setListData(response)
-    }
+    setSearchTextBox(search)
 
-    console.log("List data is : ", listData);
-
-    useEffect(() => {
-        getFilter();
-    },[])
-
-
-    useEffect(() => {
-        postList(inputDetails, sortStatus)
-    }, [inputDetails, sortStatus])
-
+   
     const handleDetails = (e) => {
+
+        const {name , value} = e.target
+
         setInputDetails(prevDetails => ({
-            ...prevDetails, [e.target.name]: parseInt(e.target.value) 
+            ...prevDetails, [name] : parseInt(value) 
         }))
+
     }
+
+    setSortValue(inputDetails)
 
 
     // For Developed By
@@ -55,6 +49,7 @@ function SearchAndList() {
         const value = e.target.value
         setSelectedRate(value);
         handleDetails(e);
+        
     };
 
     const getRateFontWeight = (option) => {
@@ -66,19 +61,14 @@ function SearchAndList() {
         const value = e.target.value
         setSelectedType(value);
         handleDetails(e);
+        
     };
 
     const getTypeFontWeight = (option) => {
         return selectedType === option ? 500 : 400;
     };
 
-    // console.log("The Details is :", inputDetails);
-
-
-
-    // ----------For Filter-------------Filter------------------Filter------------------Filter-----------Filter---------
-
-    const postList = async (details, sortStatus) => {
+    const searchListCall = async (search) => {
 
         try {
 
@@ -89,40 +79,38 @@ function SearchAndList() {
 
             const fullDetails = {
                 "page_num": 1,
-                "filter_id": null,
-                "segment_id": null,
-                "price_type": null,
-                "rating_by": details.rating_by,
-                "application_type": details.application_type,
-                "min_price_limit": 0,
-                "max_price_limit": 29500000,
-                "min_investment_limit": 0,
-                "max_investment_limit": 100000000,
-                "sort_by": sortStatus
+                "text": search
             }
 
+            const data = await searchTheList(fullDetails, header);
 
-            const data = await postingTheList(fullDetails, header);
 
+            // if (data.status === 200) {
 
-            if (data.status === 200){
-            
-                getFilter()
-                
-
-            }
+            // }
 
             if (data.error) {
                 throw new Error(data.message)
             }
-            console.log("The posted data is :", data);
+            // console.log("The Search data is :", data);
+
+            setSearchValue(data.data.data.products)
+
+            
 
         } catch (error) {
-            console.error("Error in the posting the list :", error)
+            console.error("Error in the Searching the list :", error)
             setErrors(error.message)
         }
 
     }
+
+    const handleSearch = async (e) => {
+        setSearch(e.target.value);
+        await searchListCall(search)
+    }
+
+    // console.log("Search data input Text is :", search);
 
 
     return (
@@ -130,10 +118,9 @@ function SearchAndList() {
             <div className='main' >
                 <div className="input-group rounded-1 w-75">
                     <div className="input-group-text"><IoSearchSharp /></div>
-                    <input type="text" className="form-control" id="specificSizeInputGroupUsername" placeholder="Search for products" />
+                    <input onChange={(e) => handleSearch(e)} type="text" className="form-control" id="specificSizeInputGroupUsername" placeholder="Search for products" />
                 </div>
 
-                {errors && <div className="error">Error: {errors}</div>}
 
                 <div className='listhead mt-5'>
                     <span>Developed by</span>

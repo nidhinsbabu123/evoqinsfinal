@@ -8,10 +8,10 @@ function Marketplace() {
 
       <Row>
 
-        <Col lg={1} md={2} ></Col>
-        <Col lg={10} md={8}>
+        
+        <Col lg={12} md={12} sm={12}>
 
-          <div className=''>
+          <div className='img-fluid'>
 
             <div className='backgroundwall d-flex flex-column justify-content-center align-items-center rounded'>
 
@@ -21,7 +21,7 @@ function Marketplace() {
                 <p className='tagline text-center mt-2'>India's first products marketplace with <br /> advanced tools & apps to empower your every trade!</p>
               </div>
 
-              <img className='img1 w-100 rounded' src="./images/mask-group.svg" alt="" />
+              <img className='img1 img-fluid w-100 rounded fluid' src="./images/mask-group.svg" alt="" />
 
 
             </div>
@@ -30,7 +30,8 @@ function Marketplace() {
 
 
         </Col>
-        <Col lg={1} md={2}></Col>
+        
+        
 
       </Row>
 
